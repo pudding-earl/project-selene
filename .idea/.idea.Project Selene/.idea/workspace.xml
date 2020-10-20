@@ -10,9 +10,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TerrainGenerator.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/CalculationHandler.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TerrainGenerator.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/DataReader.cs" />
       </list>
     </option>
@@ -58,6 +63,9 @@
       <workItem from="1602610894750" duration="834000" />
       <workItem from="1602612376453" duration="246000" />
       <workItem from="1602612637753" duration="2670000" />
+      <workItem from="1603214021769" duration="683000" />
+      <workItem from="1603214756821" duration="1487000" />
+      <workItem from="1603219285104" duration="2187000" />
     </task>
     <servers />
   </component>
@@ -68,5 +76,11 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="641" y="271" key="run.anything.popup" timestamp="1603220310445">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="641" y="271" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1603220310445" />
   </component>
 </project>
