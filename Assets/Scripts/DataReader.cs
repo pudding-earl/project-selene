@@ -8,24 +8,23 @@ using UnityEngine.Assertions.Comparers;
 namespace ProjectSelene {
     public class DataReader : MonoBehaviour {
         [SerializeField] private TextAsset dataFile; // Reference to the CSV file being reads
-        [SerializeField] private TerrainGenerator terrainGenerator;
+        
+        private TerrainGenerator terrainGenerator;
 
         private List<Dataset> data = new List<Dataset>(); // The data from the file after it has been converted
 
         private char lineSeparator = '\n'; // Separates different datasets in the file
         private char fieldSeparator = ','; // Separates individual values in the datasets
 
+        private void Awake() {
+            terrainGenerator = GetComponent<TerrainGenerator>();
+        }
         private void Start() {
-            StartCoroutine(ReadData());
+            ReadData();
         }
         
-        private IEnumerator ReadData() {
-            Debug.Log("Reading and parsing data...");
+        private void ReadData() {
             string[] _datasetStrings = dataFile.text.Split(lineSeparator);
-            Debug.Log("Data read and parsed successfully.");
-
-            Debug.Log("Converting data...");
-            yield return true;
 
             for(int i = 0; i < _datasetStrings.Length - 1; i++) {
                 string[] _splitData = _datasetStrings[i].Split(fieldSeparator);
@@ -37,10 +36,9 @@ namespace ProjectSelene {
                 };
 
                 data.Add(_dataset);
-                yield return true;
             }
-            Debug.Log($"Data converted with {data.Count} sets.");
-            //terrainGenerator.ShowPlaceholders(data, 100000);
+            Debug.Log($"Data read and converted with {data.Count} sets.");
+            StartCoroutine(terrainGenerator.GeneratePlaceholders(data, 0.01f, 50000));
 
         }
     }

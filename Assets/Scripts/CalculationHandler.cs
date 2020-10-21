@@ -9,10 +9,11 @@ namespace ProjectSelene {
         private static float lunarRadius = 1737.4f;
         
         public static Vector3 ConvertDataset(Dataset dataset) {
+            float _radius = lunarRadius + dataset.height;
             Vector3 _vector3 = new Vector3 {
-                x = lunarRadius * Mathf.Cos(dataset.latitude) * Mathf.Cos(dataset.longitude),
-                y = lunarRadius * Mathf.Cos(dataset.latitude) * Mathf.Sin(dataset.longitude),
-                z = lunarRadius * Mathf.Sin(dataset.latitude)
+                x = _radius * Mathf.Cos(dataset.latitude) * Mathf.Cos(dataset.longitude),
+                z = _radius * Mathf.Cos(dataset.latitude) * Mathf.Sin(dataset.longitude),
+                y = _radius * Mathf.Sin(dataset.latitude)
             };
             return _vector3;
         }
