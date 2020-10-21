@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ProjectSelene {
     public class TerrainGenerator : MonoBehaviour {
-        [SerializeField] private GameObject placeholder; // A placeholder object to represent datapoint positions
+    /*    [SerializeField] private GameObject placeholder; // A placeholder object to represent datapoint positions
 
         public void ShowPlaceholders(List<Dataset> data, int divisor = 1000) {
             for(int i = 0; i < data.Count; i++) {
@@ -15,6 +15,6 @@ namespace ProjectSelene {
                     }
                 }
             }
-        }
+        }*/
     }
 }

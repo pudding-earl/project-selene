@@ -19,14 +19,13 @@ namespace ProjectSelene {
             StartCoroutine(ReadData());
         }
         
-        // TODO: consider changing this to an async task if time permits
         private IEnumerator ReadData() {
             Debug.Log("Reading and parsing data...");
             string[] _datasetStrings = dataFile.text.Split(lineSeparator);
             Debug.Log("Data read and parsed successfully.");
 
             Debug.Log("Converting data...");
-            yield return new WaitForSeconds(0.25f); // Delay to allow proper debug logging
+            yield return true;
 
             for(int i = 0; i < _datasetStrings.Length - 1; i++) {
                 string[] _splitData = _datasetStrings[i].Split(fieldSeparator);
@@ -38,6 +37,7 @@ namespace ProjectSelene {
                 };
 
                 data.Add(_dataset);
+                yield return true;
             }
             Debug.Log($"Data converted with {data.Count} sets.");
             //terrainGenerator.ShowPlaceholders(data, 100000);
