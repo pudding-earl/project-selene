@@ -1,3 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+*.csv filter=lfs diff=lfs merge=lfs -text
 Assets/Resources/fy20_adc_data_file_88_degrees.csv filter=lfs diff=lfs merge=lfs -text
