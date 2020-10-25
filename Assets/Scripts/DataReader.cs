@@ -9,16 +9,13 @@ namespace ProjectSelene {
     public class DataReader : MonoBehaviour {
         [SerializeField] private TextAsset dataFile; // Reference to the CSV file being reads
         
-        private TerrainGenerator terrainGenerator;
+        [SerializeField] private TerrainGenerator terrainGenerator;
 
         private List<Dataset> data = new List<Dataset>(); // The data from the file after it has been converted
 
         private char lineSeparator = '\n'; // Separates different datasets in the file
         private char fieldSeparator = ','; // Separates individual values in the datasets
-
-        private void Awake() {
-            terrainGenerator = GetComponent<TerrainGenerator>();
-        }
+        
         private void Start() {
             ReadData();
         }
@@ -38,7 +35,7 @@ namespace ProjectSelene {
                 data.Add(_dataset);
             }
             Debug.Log($"Data read and converted with {data.Count} sets.");
-            StartCoroutine(terrainGenerator.GeneratePlaceholders(data, 0.01f, 50000));
+            StartCoroutine(terrainGenerator.GeneratePlaceholders(data, 0.01f, 10000));
 
         }
     }

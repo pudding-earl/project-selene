@@ -7,14 +7,14 @@ namespace ProjectSelene {
         [SerializeField] private GameObject placeholder; // A placeholder object to represent datapoint positions
 
         public IEnumerator GeneratePlaceholders(List<Dataset> data, float delay = 0.1f, int amount = 100, int startingIndex = 0) {
-            for(int i = 0; i < amount; i++) {
+            for(int i = startingIndex; i < amount + startingIndex; i++) {
                 ShowPlaceholder(data[i]);
-                yield return new WaitForSeconds(delay);
+                yield return true;
             }
         }
 
         private void ShowPlaceholder(Dataset set) {
-            GameObject _holder = Instantiate(placeholder);
+            GameObject _holder = Instantiate(placeholder, transform);
             _holder.transform.position = CalculationHandler.ConvertDataset(set);
         }
         

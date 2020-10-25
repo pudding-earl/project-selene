@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="df1e334d-2ae8-4278-90a5-6b00f9c2995a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project Selene/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project Selene/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CalculationHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CalculationHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/DataReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DataReader.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TerrainGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/PackageManagerSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,13 +18,14 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TerrainGenerator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/E5B75411-C8CD-4BFA-A9E7-60BE20206F29/3c/e10db11a/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/CalculationHandler.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/TerrainGenerator.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/DataReader.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CalculationHandler.cs" />
       </list>
     </option>
   </component>
@@ -71,7 +73,9 @@
       <workItem from="1603214021769" duration="683000" />
       <workItem from="1603214756821" duration="1487000" />
       <workItem from="1603219285104" duration="2187000" />
-      <workItem from="1603313117364" duration="2219000" />
+      <workItem from="1603313117364" duration="2816000" />
+      <workItem from="1603473267437" duration="3847000" />
+      <workItem from="1603477961412" duration="1957000" />
     </task>
     <servers />
   </component>
