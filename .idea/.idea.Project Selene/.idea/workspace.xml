@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="df1e334d-2ae8-4278-90a5-6b00f9c2995a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Project Selene/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Project Selene/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/New Terrain.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/New Terrain.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Main.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Main.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CalculationHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CalculationHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/DataReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DataReader.cs" afterDir="false" />
@@ -23,8 +25,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/TerrainGenerator.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/DataReader.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/TerrainGenerator.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CalculationHandler.cs" />
       </list>
     </option>
@@ -38,6 +40,7 @@
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -76,6 +79,12 @@
       <workItem from="1603313117364" duration="2816000" />
       <workItem from="1603473267437" duration="3847000" />
       <workItem from="1603477961412" duration="1957000" />
+      <workItem from="1603825187589" duration="968000" />
+      <workItem from="1603905575472" duration="2462000" />
+      <workItem from="1603916069676" duration="8502000" />
+      <workItem from="1604341403446" duration="5664000" />
+      <workItem from="1604353644883" duration="1415000" />
+      <workItem from="1604439457717" duration="2742000" />
     </task>
     <servers />
   </component>
@@ -88,9 +97,13 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="641" y="271" key="run.anything.popup" timestamp="1603220310445">
+    <state x="641" y="271" key="run.anything.popup" timestamp="1603907205071">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="641" y="271" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1603220310445" />
+    <state x="641" y="271" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1603907205071" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1603907065028">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1603907065028" />
   </component>
 </project>
