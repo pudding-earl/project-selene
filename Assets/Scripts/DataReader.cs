@@ -34,8 +34,8 @@ namespace ProjectSelene {
 
                 data.Add(_dataset);
             }
-            Debug.Log($"Data read and converted with {data.Count} sets.");
-            terrainGenerator.Triangulate(data);
+            Debug.Log($"Data read and formatted with {data.Count} sets.");
+            StartCoroutine(terrainGenerator.GenerateTerrain(data));
 
         }
     }
