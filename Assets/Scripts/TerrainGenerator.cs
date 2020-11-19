@@ -1,109 +1,133 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TriangleNet.Geometry;
 
 namespace ProjectSelene {
     public class TerrainGenerator : MonoBehaviour {
-        
-        [SerializeField] private GameObject placeholder; // A placeholder object to represent datapoint positions
-        [SerializeField] private int textureSize = 4097;
-        [SerializeField] private RawImage image;
 
-        public IEnumerator GeneratePlaceholders(List<Dataset> data, float delay = 0.1f, int amount = 100, int startingIndex = 0) {
-            for(int i = startingIndex; i < amount + startingIndex; i++) {
-                ShowPlaceholder(data[i]);
-                yield return true;
-            }
-        }
+        [SerializeField] private Transform chunkPrefab;
 
-        private void ShowPlaceholder(Dataset set) {
-            GameObject _holder = Instantiate(placeholder, transform);
-            _holder.transform.position = CalculationHandler.ConvertDataset(set);
-        }
+        private List<Vector3> convertedData = new List<Vector3>();
+        private TriangleNet.Meshing.IMesh mesh;
+        private List<Vertex> vertices = new List<Vertex>();
 
-        public void GenerateHeightMap(List<Dataset> data) {
-            ConvertedData _converted = ConvertValues(data);
-            Debug.Log("Vectors calculated; Borders are as follows:");
-            Debug.Log("Minimum: " + _converted.minimum);
-            Debug.Log("Maximum: " + _converted.maximum);
-            
-            Color[] _pixels = new Color[textureSize * textureSize];
-            Debug.Log("Pixels: " + _pixels.Length);
-            for(int i = 0; i < _pixels.Length; i++) {
-                _pixels[i] = Color.black;
-            }
-            int _temp = 0;
-            for(int i = 0; i <= 5500000; i++) {
-                Vector3 _point = _converted.points[i];
-                Vector3 _rangePoint = new Vector3() {
-                    x = (_point.x - _converted.minimum.x) / (_converted.maximum.x - _converted.minimum.x),
-                    z = (_point.z - _converted.minimum.z) / (_converted.maximum.z - _converted.minimum.z),
-                    y = (_point.y - _converted.minimum.y) / (_converted.maximum.y - _converted.minimum.y)
-                };
-                
-                Vector2 _pixelPoint = new Vector2() {
-                    x = (int)(textureSize * _rangePoint.x),
-                    y = (int)(textureSize * _rangePoint.z)
-                };
+        private List<float> elevations = new List<float>();
 
-                int _pixelIndex = (int)(_pixelPoint.x * textureSize + _pixelPoint.y);
-                _pixels[_pixelIndex] = new Color(_rangePoint.y, _rangePoint.y, _rangePoint.y, 1);
+        /*public void OnDrawGizmos() {
+            if (mesh == null) {
+                return;
             }
 
-            Texture2D _texture = new Texture2D(textureSize, textureSize) {
-                wrapMode = TextureWrapMode.Clamp, filterMode = FilterMode.Point
-            };
-            Debug.Log(_pixels[0]);
-            _texture.SetPixels(_pixels);
-            _texture.Apply();
-            image.texture = _texture;
-            SaveTexture(_texture, "C:/Users/puddi/Downloads/heightmap.png");
-        }
+            Gizmos.color = Color.red;
+            foreach (Edge _edge in mesh.Edges) {
+                Vertex _v0 = vertices[_edge.P0];
+                Vertex _v1 = vertices[_edge.P1];
 
-        private ConvertedData ConvertValues(List<Dataset> data) {
-            ConvertedData _converted;
-            _converted.points = new List<Vector3>();
-            _converted.minimum = Vector3.zero;
-            _converted.maximum = Vector3.zero;
-            
-            foreach(Dataset _set in data) {
+                Vector3 _p0 = new Vector3((float)_v0.x, 0.0f, (float)_v0.y);
+                Vector3 _p1 = new Vector3((float)_v1.x, 0.0f, (float)_v1.y);
+                Gizmos.DrawLine(_p0, _p1);
+            }
+        }*/
+
+        public void Triangulate(List<Dataset> data) {
+
+            Debug.Log("Raw Datasets: " + data.Count);
+
+            foreach (Dataset _set in data) {
                 Vector3 _point = CalculationHandler.ConvertDataset(_set);
-                
-                if(_point.x < _converted.minimum.x)
-                    _converted.minimum.x = _point.x;
-                if(_point.x > _converted.maximum.x)
-                    _converted.maximum.x = _point.x;
-                if(_point.y < _converted.minimum.y)
-                    _converted.minimum.y = _point.y;
-                if(_point.y > _converted.maximum.y)
-                    _converted.maximum.y = _point.y;
-                if(_point.z < _converted.minimum.z)
-                    _converted.minimum.z = _point.z;
-                if(_point.z > _converted.maximum.z)
-                    _converted.maximum.z = _point.z;
-                
-                _converted.points.Add(_point);
+                convertedData.Add(_point);
             }
 
-            return _converted;
-        }
-        
-        public static void SaveTexture(Texture2D texture, string fullPath)
-        {
-            byte[] _bytes =texture.EncodeToPNG();
-            System.IO.File.WriteAllBytes(fullPath, _bytes);
-            Debug.Log(_bytes.Length/1024  + "Kb was saved as: " + fullPath);
+            Debug.Log("Converted Datasets: " + convertedData.Count);
+
+            Polygon _polygon = new Polygon();
+            foreach (Vector3 _point in convertedData) {
+                _polygon.Add(new Vertex(_point.x, _point.z));
+                elevations.Add(_point.y);
+            }
+
+            Debug.Log("Elevations: " + elevations.Count);
+
+            TriangleNet.Meshing.ConstraintOptions _options =
+                new TriangleNet.Meshing.ConstraintOptions() { ConformingDelaunay = false };
+            mesh = _polygon.Triangulate(_options);
+            vertices = mesh.Vertices.ToList();
+
+            Debug.Log("Vertices: " + vertices.Count);
+
+            MakeMesh();
         }
 
-        public struct ConvertedData {
-            public List<Vector3> points;
-            
-            // These are used to find the edges/borders of the area that's being plotted.
-            // A height value is not needed for these as it will be represented by the greyscale color, so Y is Z.
-            public Vector3 minimum;
-            public Vector3 maximum;
+        public void MakeMesh() {
+            Debug.Log("Total Triangles: mesh.Triangles.Count");
+            IEnumerator<ITriangle> triangleEnumerator = mesh.Triangles.GetEnumerator();
+            for(int _chunkStart = 0; _chunkStart < mesh.Triangles.Count; _chunkStart += 13263) {
+                // Unity formats
+                List<Vector3> _vertices = new List<Vector3>();
+                List<Vector3> _normals = new List<Vector3>();
+                List<Vector2> _uvs = new List<Vector2>();
+                List<int> _triangles = new List<int>();
+
+                int _chunkEnd = _chunkStart + 13263;
+                for (int i = _chunkStart; i < _chunkEnd; i++) {
+                    if(!triangleEnumerator.MoveNext()) {
+                        break;
+                    }
+
+                    ITriangle _triangle = triangleEnumerator.Current;
+
+                    Vector3 v0 = GetPoint3D(_triangle.GetVertex(2).id);
+                    Vector3 v1 = GetPoint3D(_triangle.GetVertex(1).id);
+                    Vector3 v2 = GetPoint3D(_triangle.GetVertex(0).id);
+
+                    _triangles.Add(vertices.Count);
+                    _triangles.Add(vertices.Count + 1);
+                    _triangles.Add(vertices.Count + 2);
+
+                    _vertices.Add(v0);
+                    _vertices.Add(v1);
+                    _vertices.Add(v2);
+
+                    Vector3 _normal = Vector3.Cross(v1 - v0, v2 - v0);
+                    _normals.Add(_normal);
+                    _normals.Add(_normal);
+                    _normals.Add(_normal);
+
+                    // Review this for texture issues
+                    _uvs.Add(Vector2.zero);
+                    _uvs.Add(Vector2.zero);
+                    _uvs.Add(Vector2.zero);
+                }
+
+                Mesh _chunkMesh = new Mesh();
+                _chunkMesh.vertices = _vertices.ToArray();
+                _chunkMesh.uv = _uvs.ToArray();
+                _chunkMesh.triangles = _triangles.ToArray();
+                _chunkMesh.normals = _normals.ToArray();
+
+                Transform _chunk = Instantiate<Transform>(chunkPrefab, transform.position, transform.rotation);
+                _chunk.GetComponent<MeshFilter>().mesh = _chunkMesh;
+                chunkPrefab.GetComponent<MeshCollider>().sharedMesh = _chunkMesh;
+                _chunk.transform.parent = transform;
+            }
         }
+
+        // Returns the world-space vertex for a given vertex index
+        public Vector3 GetPoint3D(int index) {
+            if(index == 1630964) {
+                Debug.Log("Invalid Index");
+                return Vector3.zero;
+            }
+            Debug.Log("Vertex ID: " + index);
+            Vertex vertex = vertices[index];
+            float elevation = elevations[index];
+            Debug.Log("Success");
+            return new Vector3((float)vertex.x, elevation, (float)vertex.y);
+        }
+
     }
 }

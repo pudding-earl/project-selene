@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 745aa5e7026ea0744a9a846e626d04ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataFile: {fileID: 4900000, guid: f759870751730a743bd09d0e5c01d1a9, type: 3}
+  dataFile: {fileID: 4900000, guid: 7cd00ccfd94463943ba4d18b2d15ef3f, type: 3}
   terrainGenerator: {fileID: 252275553}
 --- !u!4 &252275552
 Transform:
@@ -176,12 +176,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 252275550}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdf8392a3be8d934ba8f7fdaca447b72, type: 3}
+  m_Script: {fileID: 11500000, guid: 96af8d4584c3ca24593547390b90636c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeholder: {fileID: 0}
-  textureSize: 4097
-  image: {fileID: 259543225}
+  chunkPrefab: {fileID: 6879724641030968045, guid: 33c1abda535e6ca478237eeb47e5d57c,
+    type: 3}
 --- !u!1 &259543223
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +290,7 @@ Terrain:
   m_GameObject: {fileID: 786754431}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 4a5f139238805d941b0249957d651a02, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
