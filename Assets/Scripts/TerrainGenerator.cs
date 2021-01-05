@@ -10,14 +10,13 @@ namespace ProjectSelene {
     public class TerrainGenerator : MonoBehaviour {
 
         [SerializeField] private Transform chunkPrefab;
-
-        private List<Vector3> convertedData = new List<Vector3>();
+        
         private TriangleNet.Meshing.IMesh mesh;
         private List<Vertex> vertices = new List<Vertex>();
 
         private List<float> elevations = new List<float>();
 
-        public IEnumerator GenerateTerrain(List<Dataset> data) {
+        public IEnumerator GenerateTerrain(List<Vector3> data) {
             Debug.Log("Beginning terrain generation...");
             yield return new WaitForSeconds(1f);
             Triangulate(data);
@@ -26,15 +25,10 @@ namespace ProjectSelene {
             MakeMesh();
         }
 
-        private void Triangulate(List<Dataset> data) {
-
-            foreach (Dataset _set in data) {
-                Vector3 _point = CalculationHandler.ConvertDataset(_set);
-                convertedData.Add(_point);
-            }
+        private void Triangulate(List<Vector3> data) {
 
             Polygon _polygon = new Polygon();
-            foreach (Vector3 _point in convertedData) {
+            foreach (Vector3 _point in data) {
                 _polygon.Add(new Vertex(_point.x, _point.z));
                 elevations.Add(_point.y);
             }
@@ -46,12 +40,11 @@ namespace ProjectSelene {
         }
 
         public void MakeMesh() {
+            
             IEnumerator<ITriangle> _triangleEnumerator = mesh.Triangles.GetEnumerator();
-            int _chunkNumber = 1; // Used exclusively for debug logging
-            for (int _chunkStart = 0; _chunkStart < /*mesh.Triangles.Count*/13263; _chunkStart += 13263) {
+            
 
-                Debug.Log("Creating mesh: generating chunk " + _chunkNumber);
-                _chunkNumber++;
+            for (int _chunkStart = 0; _chunkStart < mesh.Triangles.Count; _chunkStart += 100) {
 
                 // Unity formats
                 List<Vector3> _vertices = new List<Vector3>();
@@ -59,7 +52,7 @@ namespace ProjectSelene {
                 List<Vector2> _uvs = new List<Vector2>();
                 List<int> _triangles = new List<int>();
 
-                int _chunkEnd = _chunkStart + 13263;
+                int _chunkEnd = _chunkStart + 100;
                 for (int i = _chunkStart; i < _chunkEnd; i++) {
                     if(!_triangleEnumerator.MoveNext()) {
                         break;
@@ -93,13 +86,13 @@ namespace ProjectSelene {
                 Mesh _chunkMesh = new Mesh();
                 _chunkMesh.vertices = _vertices.ToArray();
                 _chunkMesh.uv = _uvs.ToArray();
-                /*_chunkMesh.triangles = _triangles.ToArray();
+                _chunkMesh.triangles = _triangles.ToArray();
                 _chunkMesh.normals = _normals.ToArray();
 
                 Transform _chunk = Instantiate<Transform>(chunkPrefab, transform.position, transform.rotation);
                 _chunk.GetComponent<MeshFilter>().mesh = _chunkMesh;
                 chunkPrefab.GetComponent<MeshCollider>().sharedMesh = _chunkMesh;
-                _chunk.transform.parent = transform;*/
+                _chunk.transform.parent = transform;
             }
         }
 
